@@ -4,7 +4,7 @@ Helps you tweet your mind.
 
 ## Installation
 
-Repace `daa5f8c` by the required commit hash:
+Repace `de04fe5` by the required commit hash:
 
 ```bash
 HASH=de04fe5; pip install -e git+https://github.com/numpde/little_bird.git@${HASH}#egg=little_bird
