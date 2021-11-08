@@ -1,2 +1,4 @@
-# little_bird
-Twitter module
+# Little Bird
+
+Helps you tweet your mind.
+
