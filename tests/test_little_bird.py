@@ -3,6 +3,8 @@
 from unittest import TestCase
 
 import os
+import datetime
+
 from uuid import uuid4 as unique_id
 
 from dotenv import load_dotenv
@@ -75,7 +77,7 @@ class TestLittleBird(TestCase):
         lb = LittleBird(auth_params=get_valid_auth_params())
         text = str(unique_id())
 
-        id = lb.tweet(text).pop('id')
+        tweet_id = lb.tweet(text).pop('id')
 
         # Successful tweet(...) returns
         # {'id': '1457709521896357893', 'text': 'Hello, world!'}
@@ -83,7 +85,7 @@ class TestLittleBird(TestCase):
         with self.assertRaises(DuplicateTweetError):
             lb.tweet(text)
 
-        lb.untweet(id)
+        lb.untweet(tweet_id)
 
     def test_delete_again(self):
         lb = LittleBird(auth_params=get_valid_auth_params())
@@ -120,8 +122,7 @@ class TestLittleBird(TestCase):
         (username, user_id) = ("JeffBezos", '15506669')
         # user_id = lb.users_by_username(usernames=[username]).pop().get('id')
 
-        import datetime as dt
-        end_time = dt.datetime.fromisoformat("2021-01-01T00:00:00+00:00").timestamp()
+        end_time = datetime.datetime.fromisoformat("2021-01-01T00:00:00+00:00").timestamp()
 
         tweets = list(lb.tweets_by_user_id(user_id=user_id, end_time=end_time))
 
