@@ -142,7 +142,7 @@ class LittleBird:
             text: Content of the tweet.
 
         Returns:
-            Typically a dict like {'id': '1457709521896357893', 'text': 'Hello, world!'}.
+            Typically a dict like {'id': "1457709521896357893", 'text': "Hello, world!"}.
         """
 
         if not isinstance(text, str):
@@ -181,10 +181,10 @@ class LittleBird:
         No error is raised if it is already deleted.
 
         Args:
-            id: The id of the tweet.
+            id: The id of the tweet such as '1457709521896357893'.
 
         Returns:
-            Typically {'deleted': True}.
+            Typically the dictionary {'deleted': True}.
         """
 
         with self.oauth() as oauth:
@@ -208,11 +208,14 @@ class LittleBird:
         Main purpose is to map username to user id.
 
         Args:
-            usernames: list of usernames, e.g. ['jack', 'elonmusk'].
+            usernames: List of usernames, e.g. ['jack', 'elonmusk'].
 
         Returns:
-            List like [{'id': ..., 'name': ..., 'username': ...}, ...].
+            A list like [{'id': ..., 'name': ..., 'username': ...}, ...].
         """
+
+        if (not isinstance(usernames, list)) or (not all((isinstance(x, str) and x) for x in usernames)):
+            raise TypeError("A list of usernames is expected.")
 
         with self.oauth() as oauth:
             url = "https://api.twitter.com/2/users/by"
@@ -231,8 +234,8 @@ class LittleBird:
 
         Args:
             user_id: user id (such as '15506669' for @JeffBezos).
-            start_time: timestamp.
-            end_time: timestamp.
+            start_time: timestamp (optional).
+            end_time: timestamp (optional).
 
         Yields:
             Tweets in reverse chronological order.
