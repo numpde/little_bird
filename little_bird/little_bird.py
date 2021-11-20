@@ -106,6 +106,24 @@ class LittleBird:
             assert oauth.authorized
             yield oauth
 
+    def verify_credentials(self):
+        """
+        Calls up the `verify_credentials` Twitter endpoint
+        with the provided API credentials.
+
+        If the authentication is successful, returns
+        a dictionary with user data, incl. 'id', 'name', etc.
+        """
+
+        with self.oauth() as oauth:
+            url = "https://api.twitter.com/1.1/account/verify_credentials.json"
+            (response, content) = parse(oauth.get(url))
+
+            if response.status_code == 200:
+                return content
+
+            raise Exception(f"Status {response.status_code}: {content}.")
+
     def get_tweets_by_id(self, ids: List[str]):
         """
         Args:

@@ -40,6 +40,18 @@ class TestLittleBird(TestCase):
             with self.assertRaises(ValueError):
                 LittleBird(auth_params={k: (v if (k != x) else "") for (k, v) in auth_params.items()})
 
+    def test_verify_credentials(self):
+        lb = LittleBird(auth_params=get_valid_auth_params())
+        content = lb.verify_credentials()
+        self.assertTrue({'id', 'name', 'description', 'suspended'}.issubset(content))
+
+    def test_verify_credentials_fail(self):
+        auth_params = get_valid_auth_params()
+        auth_params = {k: f"{v}123" for (k, v) in auth_params.items()}
+        lb = LittleBird(auth_params=auth_params)
+        with self.assertRaises(TwitterError):
+            lb.verify_credentials()
+
     def test_get_tweets_by_id(self):
         lb = LittleBird(auth_params=get_valid_auth_params())
 
