@@ -111,8 +111,12 @@ class LittleBird:
         Calls up the `verify_credentials` Twitter endpoint
         with the provided API credentials.
 
-        If the authentication is successful, returns
-        a dictionary with user data, incl. 'id', 'name', etc.
+        Returns:
+            If the authentication is successful, returns
+            a dictionary with user data, incl. 'id', 'name', etc.
+
+        Raises:
+            TwitterError, normally when authentication fails.
         """
 
         with self.oauth() as oauth:
