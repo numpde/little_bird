@@ -139,3 +139,9 @@ class TestLittleBird(TestCase):
         tweets = list(lb.tweets_by_user_id(user_id=user_id, end_time=end_time))
 
         self.assertEqual(len(list(tweets)), 240)
+
+    def test_tweet_a_link(self):
+        link = "https://www.bbc.com/news"
+        lb = LittleBird(auth_params=get_valid_auth_params())
+        tweet_id = lb.tweet(str(unique_id()) + " -- " + link).pop('id')
+        self.assertDictEqual({'deleted': True}, lb.untweet(tweet_id))
